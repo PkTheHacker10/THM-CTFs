@@ -1,7 +1,6 @@
 import socket
 import argparse
 from threading import Event
-from rich import console
 from concurrent.futures import ThreadPoolExecutor, as_completed
 
 class pass_brute:
@@ -9,7 +8,6 @@ class pass_brute:
         self.target = args.target
         self.port = args.port
         self.wordlist = args.wordlist
-        self.no_color = args.no_color
         self.threads = int(args.threads)
         self.stop_event = stop_event  # Store stop_event in class
 
@@ -81,27 +79,23 @@ class pass_brute:
         self.passbrute_handler()
 
 class cli:
-    def banner(self, args):
-        if args.no_color:
-            print("-" * 50)
-            print("|          PyRat THM Password BruteForce          |")   
-            print("|          .............................          |") 
-            print("|  Author: PkTheHacker10                          |")
-            print("|  Version: 1.0                                   |")    
-            print("-" * 50)     
-        else:
-            console.print("""
+    def banner(self,args):
+        print("""
                                         ___.                 __          
             ___________    ______ ______ \\_ |_________ __ ___/  |_  ____  
             \\____ \\__  \\  /  ___//  ___/  | __ \\_  __ \\  |  \\   __\\/ __ \\ 
             |  |_> > __ \\_\\___ \\ \\___ \\   | \\_\\ \\  | \\/  |  /|  | \\  ___/ 
             |   __(____  /____  >____  >  |___  /__|  |____/ |__|  \\___  >
             |__|       \\/     \\/     \\/       \\/                       \\/ 
-                """, style="bold blue")
-            print("Author: PkTheHacker10")
-            print("Version: 1.0")
-            print("Github:")    
-            print("-" * 50)
+                """)
+        print("						Author   : PkTheHacker10")
+        print("-" * 75)
+        print("Github   : https://github.com/PkTheHacker10/THM-CTFs.git ")
+        print("Target   :",args.target)
+        print("Port     :",args.port)
+        print("Threads  :",args.threads)
+        print("Wordlist :",args.wordlist)    
+        print("-" * 75)
 
     def argsparser(self):
         argsparser = argparse.ArgumentParser(add_help=False, usage=argparse.SUPPRESS, exit_on_error=False)
@@ -109,17 +103,15 @@ class cli:
         argsparser.add_argument("-p", "--port",type=int, required=True)
         argsparser.add_argument("-w", "--wordlist", required=True)
         argsparser.add_argument("-T", "--threads", default=40)
-        argsparser.add_argument("-nc", "--no-color", action="store_true")
         args = argsparser.parse_args()
         return args
 
 if __name__ == "__main__":
-    console = console.Console()
     stop_event = Event()
     cli = cli()
     args = cli.argsparser()
     cli.banner(args)
-    console.log("Starting Password BruteForce Attack...")
+    print("Starting Password BruteForce Attack...")
     
     password_bruteforce = pass_brute(args, stop_event)
     password_bruteforce.start()
