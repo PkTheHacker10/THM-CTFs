@@ -87,8 +87,7 @@ class cli:
             print("|          PyRat THM Password BruteForce          |")   
             print("|          .............................          |") 
             print("|  Author: PkTheHacker10                          |")
-            print("|  Version: 1.0                                   |")
-            print("|  Github:                                        |")    
+            print("|  Version: 1.0                                   |")    
             print("-" * 50)     
         else:
             console.print("""
